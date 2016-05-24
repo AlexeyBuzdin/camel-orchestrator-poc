@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:annotation-config/>
+
+    <rabbit:connection-factory id="connectionFactory" host="192.168.99.100" port="32771"/>
+
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:queue name="capitalize.in"/>
+    <rabbit:queue name="capitalize.out"/>
+
+    <rabbit:topic-exchange name="capitalize">
+        <rabbit:bindings>
+            <rabbit:binding queue="capitalize.in" pattern="capitalize.in"/>
+            <rabbit:binding queue="capitalize.out" pattern="capitalize.out"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <rabbit:template id="capitalizeTemplate" connection-factory="connectionFactory"
+                     exchange="capitalize" routing-key="capitalize.out"/>
+
+
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="capitalizeListener" method="onMessage" queue-names="capitalize.in"/>
+    </rabbit:listener-container>
+
+    <bean id="capitalizeListener" class="lv.ctco.camelpoc.capitalize.CapitalizeListener"/>
+
+</beans>
