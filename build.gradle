@@ -1,0 +1,24 @@
+allprojects {
+	ext {
+		springBootVersion = '1.3.5.RELEASE'
+		camelVersion = '2.17.1'
+	}
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	buildscript {
+		repositories {
+			mavenLocal()
+			mavenCentral()
+		}
+		dependencies {
+			classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		}
+	}
+
+	apply plugin: 'java'
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+}

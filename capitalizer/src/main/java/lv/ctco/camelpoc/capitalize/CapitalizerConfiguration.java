@@ -4,6 +4,6 @@ import org.springframework.context.annotation.*;
 
 @Configuration
 @ImportResource({"classpath:context.xml"})
-public class CapitalizeConfiguration {
+public class CapitalizerConfiguration {
 
 }

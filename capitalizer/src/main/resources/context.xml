@@ -33,6 +33,6 @@
         <rabbit:listener ref="capitalizeListener" method="onMessage" queue-names="capitalize.in"/>
     </rabbit:listener-container>
 
-    <bean id="capitalizeListener" class="lv.ctco.camelpoc.capitalize.CapitalizeListener"/>
+    <bean id="capitalizeListener" class="lv.ctco.camelpoc.capitalize.CapitalizerListener"/>
 
 </beans>

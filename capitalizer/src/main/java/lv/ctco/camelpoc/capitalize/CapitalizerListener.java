@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.*;
 
 import java.nio.charset.*;
 
-public class CapitalizeListener implements MessageListener {
+public class CapitalizerListener implements MessageListener {
 
     @Autowired
     RabbitTemplate capitalizeTemplate;
