@@ -1,4 +1,5 @@
 include 'orchestrator'
 include 'capitalizer'
+include 'truncator'
 
 rootProject.name = 'camel-orchestrator'

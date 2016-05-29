@@ -15,24 +15,24 @@
 
     <rabbit:admin connection-factory="connectionFactory"/>
 
-    <rabbit:queue name="capitalize.in"/>
-    <rabbit:queue name="capitalize.out"/>
+    <rabbit:queue name="truncate.in"/>
+    <rabbit:queue name="truncate.out"/>
 
-    <rabbit:topic-exchange name="capitalize">
+    <rabbit:topic-exchange name="truncate">
         <rabbit:bindings>
-            <rabbit:binding queue="capitalize.in" pattern="capitalize.in"/>
-            <rabbit:binding queue="capitalize.out" pattern="capitalize.out"/>
+            <rabbit:binding queue="truncate.in" pattern="truncate.in"/>
+            <rabbit:binding queue="truncate.out" pattern="truncate.out"/>
         </rabbit:bindings>
     </rabbit:topic-exchange>
 
-    <rabbit:template id="capitalizeTemplate" connection-factory="connectionFactory"
-                     exchange="capitalize" routing-key="capitalize.out"/>
+    <rabbit:template id="truncateTemplate" connection-factory="connectionFactory"
+                     exchange="truncate" routing-key="truncate.out"/>
 
 
     <rabbit:listener-container connection-factory="connectionFactory">
-        <rabbit:listener ref="capitalizeListener" method="onMessage" queue-names="capitalize.in"/>
+        <rabbit:listener ref="truncateListener" method="onMessage" queue-names="truncate.in"/>
     </rabbit:listener-container>
 
-    <bean id="capitalizeListener" class="lv.ctco.camelpoc.CapitalizerListener"/>
+    <bean id="truncateListener" class="lv.ctco.camelpoc.TruncatorListener"/>
 
 </beans>

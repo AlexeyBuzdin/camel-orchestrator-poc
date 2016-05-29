@@ -1,12 +1,13 @@
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'orchestrator'
+    baseName = 'capitalizer'
 }
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-amqp')
+    compile('org.springframework.boot:spring-boot-starter-jetty')
 
     compile("org.apache.camel:camel-spring-boot-starter:${camelVersion}")
 
