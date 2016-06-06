@@ -23,7 +23,7 @@ public abstract class AmqpRouteBuilder extends RouteBuilder {
     }
 
     public RouteDefinition to(ProcessorDefinition<RouteDefinition>  routeDefinition, String topic, String direction) {
-        return routeDefinition.to(createAmqpUri(topic, direction));
+        return routeDefinition.to(createAmqpUri(topic, direction)).id(topic);
     }
 
     private String createAmqpUri(String topic, String direction) {
