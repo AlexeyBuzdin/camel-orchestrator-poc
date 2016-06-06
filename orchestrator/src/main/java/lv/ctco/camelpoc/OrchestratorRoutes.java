@@ -8,10 +8,8 @@ public class OrchestratorRoutes extends AmqpRouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        camel(from("timer://simple?period=10000").setBody().simple("foo"))
-                .to("capitalize", "in");
-
-        from("capitalize", "out").to("truncate", "in");
-        from("truncate", "out").camel().log("Finished ${body}");
+        camel(from("direct:dc")).to("truncate", "in");
+        from("truncate", "out").to("capitalize", "in");
+        from("capitalize", "out").camel().log("Finished ${body}");
     }
 }
