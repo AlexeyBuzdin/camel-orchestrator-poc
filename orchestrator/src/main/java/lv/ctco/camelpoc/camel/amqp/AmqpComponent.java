@@ -17,11 +17,13 @@ public class AmqpComponent extends DefaultComponent {
     @Override
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         RabbitMQComponent rabbitMQComponent = new RabbitMQComponent(camelContext);
-        return rabbitMQComponent.createEndpoint(
-                RABBITMQ_URL + "/" + remaining + "?" +
+        RabbitMQEndpoint endpoint = (RabbitMQEndpoint) rabbitMQComponent.createEndpoint(RABBITMQ_URL + "/" +
+                remaining + "?" +
                 "autoDelete=false&" +
                 "exchangeType=topic&" +
                 "routingKey=" + remaining + "." + parameters.get("direction"));
+        endpoint.setBridgeEndpoint(true);
+        return endpoint;
     }
 
     protected void validateParameters(String uri, Map<String, Object> parameters, String optionPrefix) {

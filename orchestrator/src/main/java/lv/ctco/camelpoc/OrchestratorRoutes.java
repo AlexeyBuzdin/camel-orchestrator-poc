@@ -1,15 +1,22 @@
 package lv.ctco.camelpoc;
 
-import lv.ctco.camelpoc.camel.*;
+import org.apache.camel.builder.*;
 import org.springframework.stereotype.*;
 
 @Component
-public class OrchestratorRoutes extends AmqpRouteBuilder {
+public class OrchestratorRoutes extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        camel(from("direct:startPipeline")).to("truncate", "in");
-        from("truncate", "out").to("capitalize", "in");
-        from("capitalize", "out").camel().log("Finished ${body}");
+        from("direct:startPipeline")
+                .to("mq:truncate?direction=in")
+                .id("truncate");
+
+        from("mq:truncate?direction=out")
+                .to("mq:capitalize?direction=in")
+                .id("capitalize");
+
+        from("mq:capitalize?direction=out")
+                .log("Finished ${body}");
     }
 }
