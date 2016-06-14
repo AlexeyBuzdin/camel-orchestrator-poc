@@ -13,8 +13,10 @@ public class OrchestratorController {
     ProducerTemplate producerTemplate;
 
     @RequestMapping(path = "/send", method = RequestMethod.GET)
-    public String productsList(String message) {
-        producerTemplate.sendBodyAndHeader(message, RabbitMQConstants.CORRELATIONID, UUID.randomUUID().toString());
+    public String productsList(String message, @RequestParam(required = false, defaultValue = "1") int times) {
+        for (int i = 0; i < times; i++) {
+            producerTemplate.sendBodyAndHeader(message, RabbitMQConstants.CORRELATIONID, UUID.randomUUID().toString());
+        }
         return message;
     }
 }
