@@ -17,7 +17,8 @@ public class AppenderListener implements MessageListener {
             String messageStr = new String(message.getBody(), StandardCharsets.UTF_8);
             System.out.println("Received: " + messageStr);
             String newString = "a" + messageStr;
-            appendTemplate.convertAndSend(newString);
+            Message outMessage = new Message(newString.getBytes(), message.getMessageProperties());
+            appendTemplate.send(outMessage);
         } catch (Exception e) {
             e.printStackTrace();
         }

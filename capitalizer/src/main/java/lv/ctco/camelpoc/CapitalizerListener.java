@@ -16,7 +16,9 @@ public class CapitalizerListener implements MessageListener {
         try {
             String messageStr = new String(message.getBody(), StandardCharsets.UTF_8);
             System.out.println("Received: " + messageStr);
-            capitalizeTemplate.convertAndSend(messageStr.toUpperCase());
+            String newString = messageStr.toUpperCase();
+            Message outMessage = new Message(newString.getBytes(), message.getMessageProperties());
+            capitalizeTemplate.send(outMessage);
         } catch (Exception e) {
             e.printStackTrace();
         }

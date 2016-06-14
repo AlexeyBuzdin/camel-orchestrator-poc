@@ -17,7 +17,8 @@ public class TruncatorListener implements MessageListener {
             String messageStr = new String(message.getBody(), StandardCharsets.UTF_8);
             System.out.println("Received: " + messageStr);
             String newString = messageStr.length() > 2 ? messageStr.substring(1) : messageStr;
-            truncateTemplate.convertAndSend(newString);
+            Message outMessage = new Message(newString.getBytes(), message.getMessageProperties());
+            truncateTemplate.send(outMessage);
         } catch (Exception e) {
             e.printStackTrace();
         }
